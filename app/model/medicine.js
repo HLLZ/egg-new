@@ -1,19 +1,21 @@
 'use strict';
 module.exports = app => {
-  const { STRING, INTEGER } = app.Sequelize; // 获取数据类型
-  const Test = app.model.define(
-    'test',
+  const { STRING, INTEGER, TEXT } = app.Sequelize; // 获取数据类型
+  const Medicine = app.model.define(
+    'medicine',
     {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-      name: STRING(20),
-      phone: STRING(20),
+      image_path: { type: STRING, allowNull: false },
+      title: { type: STRING, allowNull: false },
+      subtitle: { type: STRING },
+      text: { type: TEXT, allowNull: false },
     },
     {
       freezeTableName: true, // Model 对应的表名将与model名相同
       timestamps: false,
     }
   );
-  return Test;
+  return Medicine;
 };
 
 /*

@@ -10,9 +10,9 @@ module.exports = app => {
   });
   const { router, controller } = app;
   router.get('/', controller.home.index);
-  router.get('/news', controller.news.index);
-  router.get('/content', controller.news.content);
-  router.get('/newslist/:id', controller.news.newslist);
-  router.get('/test', controller.test.test);
-  router.get('/Info', controller.test.Info);
+  // router.get('/newslist/:id', controller.news.newslist);
+  router.get('/findArticle', controller.article.findArticle);
+  router.get('/createArticle', controller.article.createArticle);
+  router.get('/createMedicine', controller.medicine.createMedicine);
+  router.get('/findMedicine', controller.medicine.findMedicine);
 };
