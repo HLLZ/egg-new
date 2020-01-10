@@ -14,5 +14,7 @@ module.exports = app => {
   router.get('/findArticle', controller.article.findArticle);
   router.get('/createArticle', controller.article.createArticle);
   router.get('/createMedicine', controller.medicine.createMedicine);
-  router.get('/findMedicine', controller.medicine.findMedicine);
+  router.get('/getMedicine', controller.medicine.getMedicine);
+  router.get('/createBanner', controller.banner.createBanner);
+  router.get('/getBanner', controller.banner.getBanner);
 };

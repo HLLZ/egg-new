@@ -19,3 +19,9 @@ exports.sequelize = {
   enable: true,
   package: 'egg-sequelize',
 };
+
+// mysql 插件
+exports.mysql = {
+  enable: true,
+  package: 'egg-mysql',
+};

@@ -32,10 +32,11 @@ module.exports = appInfo => {
   // 数据库配置
   config.sequelize = {
     dialect: 'mysql',
-    database: 'hll',
+    database: ' bishe',
     username: 'root',
-    password: '12345678',
+    password: '123456',
     host: 'localhost',
+    port: '3306',
     define: {
       // 使用自定义的表名
       freezeTableName: true,
@@ -43,6 +44,12 @@ module.exports = appInfo => {
       timestamps: true,
       // 表名小驼峰
       underscored: false,
+    },
+  };
+
+  config.security = {
+    csrf: {
+      enable: false,
     },
   };
 
