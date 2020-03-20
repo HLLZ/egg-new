@@ -1,15 +1,13 @@
 'use strict';
 module.exports = app => {
   const { STRING, INTEGER, TEXT, DATE } = app.Sequelize; // 获取数据类型
-  const Article = app.model.define(
-    'article',
+  const Commit = app.model.define(
+    'commit',
     {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-      title: { type: STRING, allowNull: false },
-      subtitle: { type: STRING, allowNull: false },
+      parent_id: { type: INTEGER, allowNull: false },
       text: { type: TEXT, allowNull: false },
-      name: { type: STRING, allowNull: false },
-      openid: { type: STRING, allowNull: false },
+      nickName: { type: STRING, allowNull: false },
       createdAt: { type: DATE, defaultValue: app.Sequelize.NOW },
     },
     {
@@ -17,7 +15,7 @@ module.exports = app => {
       timestamps: false,
     }
   );
-  return Article;
+  return Commit;
 };
 
 /*

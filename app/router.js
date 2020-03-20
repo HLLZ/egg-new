@@ -12,7 +12,7 @@ module.exports = app => {
   router.get('/', controller.home.index);
   // router.get('/newslist/:id', controller.news.newslist);
   router.get('/getArticle', controller.article.getArticle);
-  router.get('/createArticle', controller.article.createArticle);
+  router.post('/createArticle', controller.article.createArticle);
   router.get('/createMedicine', controller.medicine.createMedicine);
   router.get('/getMedicine', controller.medicine.getMedicine);
   router.get('/createBanner', controller.banner.createBanner);
@@ -21,4 +21,8 @@ module.exports = app => {
   router.get('/createMyArticle', controller.myarticle.createMyArticle);
   router.get('/createNews', controller.news.createNews);
   router.get('/getNews', controller.news.getNews);
+  router.get('/getSeason', controller.season.getSeason);
+  router.post('/setUser', controller.user.setUser);
+  router.get('/getCommit', controller.commit.getCommit);
+  router.post('/setCommit', controller.commit.setCommit);
 };

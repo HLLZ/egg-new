@@ -26,6 +26,9 @@ class MedicineController extends Controller {
     if (queryObj.id) {
       where.id = queryObj.id;
     }
+    if (queryObj.keyword) {
+      where.title = queryObj.keyword;
+    }
     console.log('queryObj', queryObj);
     const count = await this.app.model.Medicine.count({ where });
     const result = await this.ctx.model.Medicine.findAll({

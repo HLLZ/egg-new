@@ -14,8 +14,36 @@ class NewsController extends Controller {
   }
   // 查询文章
   async getNews() {
-    const result = await this.ctx.model.News.findAll();
-    this.ctx.body = { result };
+    const queryObj = this.ctx.query;
+    console.log('queryObj', queryObj);
+    const where = {};
+    const pagination = { pageSize: 10, current: 1 };
+    // 每页显示数量
+    if (queryObj.pageSize) {
+      pagination.pageSize = Number(queryObj.pageSize);
+    }
+    // 当前页数
+    if (queryObj.current) {
+      pagination.current = queryObj.current;
+    }
+    if (queryObj.id) {
+      where.id = queryObj.id;
+    }
+    const count = await this.app.model.News.count({ where });
+    const result = await this.ctx.model.News.findAll({
+      where,
+      offset: (pagination.current - 1) * pagination.pageSize,
+      limit: pagination.pageSize,
+      order: [[ 'createdAt', 'DESC' ]],
+    });
+    this.ctx.body = {
+      result,
+      pagination: {
+        total: count,
+        pageSize: pagination.pageSize,
+        current: pagination.current,
+      },
+    };
   }
 }
 
