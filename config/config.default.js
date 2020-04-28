@@ -32,7 +32,7 @@ module.exports = appInfo => {
   // 数据库配置
   config.sequelize = {
     dialect: 'mysql',
-    database: ' bishe',
+    database: 'bishe',
     username: 'root',
     password: '123456',
     host: 'localhost',
@@ -50,7 +50,18 @@ module.exports = appInfo => {
   config.security = {
     csrf: {
       enable: false,
+      ignoreJSON: true,
     },
+    domainWhiteList: [ 'http://localhost:3000' ],
+  };
+
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+  };
+
+  config.jwt = {
+    secret: 'jkbkbjkjskajbfousbka', // 自定义 token 的加密条件字符串
   };
 
   return {

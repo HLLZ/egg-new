@@ -10,6 +10,7 @@ module.exports = app => {
       text: { type: TEXT, allowNull: false },
       name: { type: STRING, allowNull: false },
       openid: { type: STRING, allowNull: false },
+      status: { type: INTEGER, allowNull: false },
       createdAt: { type: DATE, defaultValue: app.Sequelize.NOW },
     },
     {

@@ -3,21 +3,36 @@
 const Controller = require('egg').Controller;
 
 class NewsController extends Controller {
+
+  // 创建新闻
   async createNews() {
-    const result = await this.app.model.News.create({
-      title: '养生普及小知识',
-      subtitle: '知识普及',
-      text: '尽快发给大家看塞伦盖蒂康师傅尽快尽快改善的sfhjadfkadshjfkajdsfh复活节看到是否会开始减肥空间离开结果打开了法国离开家高大上了ngfdkglj 法国',
-      image: 'http://i2.tiimg.com/707670/8a2cd46f47a5fc9d.jpg',
+    const queryObj = this.ctx.request.body;
+    const result = await this.ctx.model.News.create({
+      title: queryObj.title,
+      subtitle: queryObj.subtitle,
+      text: queryObj.text,
+      image: queryObj.image,
     });
-    this.ctx.body = { result };
+    this.ctx.body = { result, state: 'success', msg: '新增成功' };
   }
-  // 查询文章
+
+  // 删除新闻
+  async deleteNews() {
+    const queryObj = this.ctx.request.body;
+    const where = {};
+    if (queryObj.id) {
+      where.id = queryObj.id;
+    }
+    await this.ctx.model.News.destroy({ where });
+    this.ctx.body = { state: 'success', msg: '删除成功' };
+  }
+
+  // 查询新闻
   async getNews() {
     const queryObj = this.ctx.query;
     console.log('queryObj', queryObj);
     const where = {};
-    const pagination = { pageSize: 10, current: 1 };
+    const pagination = { current: 1, pageSize: 10 };
     // 每页显示数量
     if (queryObj.pageSize) {
       pagination.pageSize = Number(queryObj.pageSize);
@@ -25,6 +40,9 @@ class NewsController extends Controller {
     // 当前页数
     if (queryObj.current) {
       pagination.current = queryObj.current;
+    }
+    if (queryObj.kewWords) {
+      where.title = queryObj.kewWords;
     }
     if (queryObj.id) {
       where.id = queryObj.id;
@@ -37,6 +55,7 @@ class NewsController extends Controller {
       order: [[ 'createdAt', 'DESC' ]],
     });
     this.ctx.body = {
+      state: 'success',
       result,
       pagination: {
         total: count,
@@ -44,6 +63,36 @@ class NewsController extends Controller {
         current: pagination.current,
       },
     };
+  }
+  // 修改新闻
+  async updateNews() {
+    const queryObj = this.ctx.request.body;
+    // eslint-disable-next-line eqeqeq
+    const where = {};
+    if (queryObj.id) {
+      where.id = queryObj.id;
+    }
+    const result = await this.ctx.model.News.findOne({ where });
+    if (result) {
+      const result = await this.app.model.News.update(
+        {
+          title: queryObj.title,
+          subtitle: queryObj.subtitle,
+          text: queryObj.text,
+          image: queryObj.image,
+        },
+        {
+          where: {
+            id: queryObj.id,
+          },
+        }
+      );
+      this.ctx.body = {
+        result,
+        state: 'success',
+        msg: '更改完成',
+      };
+    }
   }
 }
 

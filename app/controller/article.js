@@ -12,6 +12,7 @@ class ArticleController extends Controller {
       text: queryObj.text,
       name: queryObj.name,
       openid: queryObj.openid,
+      ststus: 2,
     });
     this.ctx.body = { result };
   }
@@ -35,6 +36,9 @@ class ArticleController extends Controller {
     if (queryObj.openid) {
       where.openid = queryObj.openid;
     }
+    if (queryObj.status) {
+      where.status = queryObj.status;
+    }
     const count = await this.app.model.Article.count({ where });
     const result = await this.ctx.model.Article.findAll({
       where,
@@ -49,7 +53,50 @@ class ArticleController extends Controller {
         pageSize: pagination.pageSize,
         current: pagination.current,
       },
+      statu: 200,
     };
+  }
+
+  async deleteArticle() {
+    const queryObj = this.ctx.request.body;
+    const where = {};
+    if (queryObj.id) {
+      where.id = queryObj.id;
+    }
+    await this.ctx.model.Article.destroy({ where });
+    this.ctx.body = { state: 'success', msg: '删除成功' };
+  }
+
+  async checkArticle() {
+    const queryObj = this.ctx.request.body;
+    console.log('queryObj', queryObj);
+    // eslint-disable-next-line eqeqeq
+    if (queryObj.status == 0 || queryObj.status == 1 || queryObj.status == 2) {
+      const where = {};
+      if (queryObj.id) {
+        where.id = queryObj.id;
+      }
+      const result = await this.ctx.model.Article.findOne({ where });
+      if (result) {
+        const result = await this.app.model.Article.update(
+          {
+            status: queryObj.status,
+          },
+          {
+            where: {
+              id: queryObj.id,
+            },
+          }
+        );
+        this.ctx.body = {
+          result,
+          state: 'success',
+          msg: '更改完成',
+        };
+      }
+    } else {
+      this.ctx.body = { state: 'fail', msg: '请传递正确的审核结果' };
+    }
   }
 }
 

@@ -3,15 +3,30 @@
 const Controller = require('egg').Controller;
 
 class MedicineController extends Controller {
+  // 新增药材
   async createMedicine() {
+    const queryObj = this.ctx.request.body;
     const result = await this.ctx.model.Medicine.create({
-      title: '养生普及小知识',
-      subtitle: '知识普及',
-      image_path: 'http://i2.tiimg.com/707670/df80e63c89b6c214.jpg',
-      text: '尽快发给大家看塞伦盖蒂康师傅尽快尽快改善的sfhjadfkadshjfkajdsfh复活节看到是否会开始减肥空间离开结果打开了法国离开家高大上了ngfdkglj 法国',
+      title: queryObj.title,
+      subtitle: queryObj.subtitle,
+      text: queryObj.text,
+      image_path: queryObj.image,
     });
-    this.ctx.body = { result };
+    this.ctx.body = { result, state: 'success', msg: '新增成功' };
   }
+
+  // 删除药材
+  async deleteMedicine() {
+    const queryObj = this.ctx.request.body;
+    const where = {};
+    if (queryObj.id) {
+      where.id = queryObj.id;
+    }
+    await this.ctx.model.Medicine.destroy({ where });
+    this.ctx.body = { state: 'success', msg: '删除成功' };
+  }
+
+  // 查询药材
   async getMedicine() {
     const queryObj = this.ctx.query;
     const where = {};
@@ -44,6 +59,7 @@ class MedicineController extends Controller {
         pageSize: pagination.pageSize,
         current: pagination.current,
       },
+      state: 'success',
     };
   }
 }
