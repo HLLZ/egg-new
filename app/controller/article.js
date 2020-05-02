@@ -12,7 +12,7 @@ class ArticleController extends Controller {
       text: queryObj.text,
       name: queryObj.name,
       openid: queryObj.openid,
-      ststus: 2,
+      status: 2,
     });
     this.ctx.body = { result };
   }

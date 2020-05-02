@@ -12,7 +12,7 @@ class CommitController extends Controller {
     }
     const result = await this.ctx.model.Commit.findAll({
       where,
-      order: [[ 'createdAt', 'DESC' ]],
+      order: [[ 'createdAt', 'ASC' ]],
     });
     this.ctx.body = { result };
   }
@@ -22,6 +22,7 @@ class CommitController extends Controller {
       parent_id: queryObj.parent_id,
       nickName: queryObj.nickName,
       text: queryObj.text,
+      tonickName: queryObj.tonickName,
     });
     this.ctx.body = { result };
   }

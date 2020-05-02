@@ -30,7 +30,9 @@ module.exports = app => {
   router.post('/checkArticle', controller.article.checkArticle);
   router.post('/deleteArticle', controller.article.deleteArticle);
   router.post('/createNews', controller.news.createNews);
+  router.post('/createVideo', controller.tabpans.createVideo);
   router.post('/deleteNews', controller.news.deleteNews);
+  router.post('/deleteVideo', controller.tabpans.deleteVideo);
   router.post('/updateNews', controller.news.updateNews);
   router.post('/deleteMedicine', controller.medicine.deleteMedicine);
   router.post('/createMedicine', controller.medicine.createMedicine);

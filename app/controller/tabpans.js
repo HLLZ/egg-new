@@ -6,6 +6,9 @@ class TabpansController extends Controller {
   async getTabpans() {
     const queryObj = this.ctx.query;
     const where = {};
+    if (queryObj.kewWords) {
+      where.videoid = queryObj.kewWords;
+    }
     const pagination = { pageSize: 5, current: 1 };
     // 每页显示数量
     if (queryObj.pageSize) {
@@ -32,7 +35,31 @@ class TabpansController extends Controller {
         current: pagination.current,
       },
       statu: 200,
+      state: 'success',
     };
+  }
+
+  // 创建视频
+  async createVideo() {
+    const queryObj = this.ctx.request.body;
+    const result = await this.ctx.model.Tabpans.create({
+      title: queryObj.title,
+      video_path: queryObj.video_path,
+      tabid: queryObj.tabid,
+      videoid: queryObj.videoid,
+    });
+    this.ctx.body = { result, state: 'success', msg: '新增成功' };
+  }
+
+  // 删除视频
+  async deleteVideo() {
+    const queryObj = this.ctx.request.body;
+    const where = {};
+    if (queryObj.videoid) {
+      where.videoid = queryObj.videoid;
+    }
+    await this.ctx.model.Tabpans.destroy({ where });
+    this.ctx.body = { state: 'success', msg: '删除成功' };
   }
 }
 

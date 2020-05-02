@@ -11,10 +11,9 @@ class UserController extends Controller {
     result1.map(item => {
       console.log('queryObj.openid', queryObj.openid);
       console.log('item.dataValues.openid', item.dataValues.openid);
-      if (queryObj.openid === item.dataValues.openid) {
+      // eslint-disable-next-line eqeqeq
+      if (queryObj.openid == item.dataValues.openid) {
         flag = false;
-      } else {
-        flag = true;
       }
     });
     if (flag) {

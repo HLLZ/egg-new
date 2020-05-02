@@ -8,6 +8,7 @@ module.exports = app => {
       title: { type: STRING, allowNull: false },
       video_path: { type: STRING, allowNull: false },
       tabid: { type: INTEGER, allowNull: false },
+      videoid: { type: INTEGER, allowNull: false },
     },
     {
       freezeTableName: true, // Model 对应的表名将与model名相同

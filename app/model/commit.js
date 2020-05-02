@@ -8,6 +8,7 @@ module.exports = app => {
       parent_id: { type: INTEGER, allowNull: false },
       text: { type: TEXT, allowNull: false },
       nickName: { type: STRING, allowNull: false },
+      tonickName: { type: STRING, allowNull: true },
       createdAt: { type: DATE, defaultValue: app.Sequelize.NOW },
     },
     {
